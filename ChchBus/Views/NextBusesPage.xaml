@@ -11,37 +11,71 @@
 
 	<Page.Resources>
 		<b:VisibleWhenTrueConverter x:Key="VisibleWhenTrueConverter" />
-		<DataTemplate x:Key="ETATemplate">
-			<Grid>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="*" />
-					<ColumnDefinition Width="10*" />
-					<ColumnDefinition Width="*"/>
-				</Grid.ColumnDefinitions>
-				<TextBlock Grid.Column="0" Text="{Binding RouteNo}" Margin="0,0,10,0" />
-				<TextBlock Grid.Column="1" Text="{Binding Destination}" Margin="0,0,10,0" TextWrapping="NoWrap" />
-				<TextBlock Grid.Column="2" Text="{Binding Mins}" Margin="0,0,10,0" />
-			</Grid>
-		</DataTemplate>
+		<b:CollapsedWhenNullConverter x:Key="CollapsedWhenNullConverter" />
+		<local:DateTimeConverter x:Key="DateTimeConverter" />
 	</Page.Resources>
 
 	<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
+			<RowDefinition Height="*" />
+			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
-		<StackPanel Grid.Row="0" Margin="10,10,10,10">
-			<TextBlock Text="Next buses" Style="{StaticResource TitleTextBlockStyle}" Margin="0,0,0,10" />
-			<TextBox x:Name="entryBox" PlaceholderText="Enter platform number" Margin="0,0,0,10"
-				TextChanged="TextBox_TextChanged" Width="180" HorizontalAlignment="Left" />
-			<ProgressBar x:Name="loading" IsIndeterminate="True"
-				Visibility="{Binding IsLoading, Converter={StaticResource VisibleWhenTrueConverter}}" />
-			<TextBlock Text="{Binding PlatformName}" Style="{StaticResource SubtitleTextBlockStyle}" 
-				Visibility="{Binding ShowList, Converter={StaticResource VisibleWhenTrueConverter}}" />
-			<ListView x:Name="listView" Grid.Row="3"
-				Visibility="{Binding ShowList, Converter={StaticResource VisibleWhenTrueConverter}}"
-				ItemTemplate="{StaticResource ETATemplate}" 
-				ItemsSource="{Binding ETAs}" />
-			<TextBlock Text="{Binding Error}" Style="{StaticResource BodyTextBlockStyle}" />
+
+		<StackPanel Grid.Row="0" Margin="10,10,10,0">
+			<TextBlock Text="Next buses" Style="{StaticResource HeaderTextBlockStyle}" Margin="0,0,0,10" />
+			<TextBox x:Name="entryBox" PlaceholderText="Enter platform number"
+					Margin="0,0,0,10"
+					TextChanged="TextBox_TextChanged" Width="180" HorizontalAlignment="Left" />
+			<ProgressBar IsIndeterminate="True"
+					Visibility="{Binding IsLoading, Converter={StaticResource VisibleWhenTrueConverter}}" />
+			<TextBlock Text="{Binding Error}"
+				Visibility="{Binding Error, Converter={StaticResource CollapsedWhenNullConverter}}" />
+			<StackPanel Orientation="Horizontal"
+					Visibility="{Binding ShowList, Converter={StaticResource VisibleWhenTrueConverter}}">
+				<TextBlock Text="{Binding PlatformNo}" Style="{StaticResource TitleTextBlockStyle}"
+						Margin="0,0,7,0" />
+				<TextBlock Text="{Binding PlatformName}" Style="{StaticResource TitleTextBlockStyle}" />
+			</StackPanel>
+		</StackPanel>
+
+		<ItemsControl Grid.Row="1" ItemsSource="{Binding ETAs}"
+			Visibility="{Binding ShowList, Converter={StaticResource VisibleWhenTrueConverter}}">
+			<ItemsControl.ItemTemplate>
+				<DataTemplate>
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*" />
+							<ColumnDefinition Width="8*" />
+							<ColumnDefinition Width="*"/>
+						</Grid.ColumnDefinitions>
+						<TextBlock Grid.Column="0" Text="{Binding RouteNo}"
+							Style="{StaticResource BaseTextBlockStyle}"
+							TextWrapping="NoWrap" />
+						<TextBlock Grid.Column="1" Text="{Binding Destination}" Margin="10,0,10,0"
+							Style="{StaticResource BodyTextBlockStyle}"
+							TextWrapping="NoWrap" />
+						<TextBlock Grid.Column="2" Text="{Binding Mins}"
+							Style="{StaticResource BaseTextBlockStyle}"
+							TextWrapping="NoWrap" />
+					</Grid>
+				</DataTemplate>
+			</ItemsControl.ItemTemplate>
+			<ItemsControl.Template>
+				<ControlTemplate TargetType="ItemsControl">
+					<ScrollViewer VerticalScrollBarVisibility="Auto">
+						<ItemsPresenter Margin="10" />
+					</ScrollViewer>
+				</ControlTemplate>
+			</ItemsControl.Template>
+		</ItemsControl>
+
+		<StackPanel Grid.Row="2" Orientation="Horizontal" Margin="10"
+			Visibility="{Binding ShowList, Converter={StaticResource VisibleWhenTrueConverter}}">
+			<TextBlock Text="Last fetched: " Style="{StaticResource CaptionTextBlockStyle}"
+				Margin="0,0,5,0"/>
+			<TextBlock Text="{Binding LastUpdated, Converter={StaticResource DateTimeConverter}}"
+				Style="{StaticResource CaptionTextBlockStyle}" />
 		</StackPanel>
 	</Grid>
 </Page>

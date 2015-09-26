@@ -22,7 +22,7 @@ namespace ChchBus {
 		/// <summary>
 		/// Error message
 		/// </summary>
-		private string error = "";
+		private string error = null;
 		public string Error {
 			get {
 				return this.error;

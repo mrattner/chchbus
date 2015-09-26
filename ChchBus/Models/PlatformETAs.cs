@@ -52,7 +52,7 @@ namespace ChchBus {
 				return null;
 			}
 
-			DateTime timeRetrieved = DateTime.Parse((string)content.Attribute("Expires"));
+			DateTime timeRetrieved = DateTime.Now;
 			string stopName = (string)platform.Attribute("Name");
 
 			List<ETA> etaList = new List<ETA>();

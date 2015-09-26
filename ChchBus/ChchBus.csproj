@@ -105,6 +105,7 @@
     </Compile>
     <Compile Include="Models\Platforms.cs" />
     <Compile Include="ViewModelLocator.cs" />
+    <Compile Include="ViewModels\DateTimeConverter.cs" />
     <Compile Include="ViewModels\Search.cs" />
     <Compile Include="ViewModels\CustomViewModel.cs" />
     <Compile Include="Models\PlatformETAs.cs" />
