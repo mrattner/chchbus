@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GalaSoft.MvvmLight.Ioc;
+﻿using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
 
 namespace ChchBus {
@@ -22,15 +17,26 @@ namespace ChchBus {
 		/// </summary>
 		public ViewModelLocator () {
 			ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
+
 			SimpleIoc.Default.Register<NextBuses>();
+			SimpleIoc.Default.Register<Favourites>();
 		}
 
 		/// <summary>
 		/// Exposes the registered NextBuses view model.
 		/// </summary>
-		public NextBuses NextBusesPage {
+		public NextBuses NextBusesViewModel {
 			get {
 				return ServiceLocator.Current.GetInstance<NextBuses>();
+			}
+		}
+
+		/// <summary>
+		/// Exposes the registered Favourites view model.
+		/// </summary>
+		public Favourites FavouritesViewModel {
+			get {
+				return ServiceLocator.Current.GetInstance<Favourites>();
 			}
 		}
 	}

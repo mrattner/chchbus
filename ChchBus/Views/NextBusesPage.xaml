@@ -7,7 +7,7 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:b="using:Itzben"
 	mc:Ignorable="d"
-	DataContext="{Binding Path=NextBusesPage, Source={StaticResource ViewModelLocator}}">
+	DataContext="{Binding Path=NextBusesViewModel, Source={StaticResource ViewModelLocator}}">
 
 	<Page.Resources>
 		<b:VisibleWhenTrueConverter x:Key="VisibleWhenTrueConverter" />
@@ -17,26 +17,36 @@
 
 	<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto" />
-			<RowDefinition Height="*" />
-			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />	<!-- 0: Upper page content -->
+			<RowDefinition Height="*" />	<!-- 1: Self-updating list -->
+			<RowDefinition Height="Auto" />	<!-- 2: Timestamp -->
 		</Grid.RowDefinitions>
 
 		<StackPanel Grid.Row="0" Margin="10,10,10,0">
 			<TextBlock Text="Next buses" Style="{StaticResource HeaderTextBlockStyle}" Margin="0,0,0,10" />
 			<TextBox x:Name="entryBox" PlaceholderText="Enter platform number"
-					Margin="0,0,0,10"
-					TextChanged="TextBox_TextChanged" Width="180" HorizontalAlignment="Left" />
+							Margin="0,0,0,10"
+							TextChanged="TextBox_TextChanged" Width="180" HorizontalAlignment="Left" />
 			<ProgressBar IsIndeterminate="True"
-					Visibility="{Binding IsLoading, Converter={StaticResource VisibleWhenTrueConverter}}" />
-			<TextBlock Text="{Binding Error}"
+							Visibility="{Binding IsLoading, Converter={StaticResource VisibleWhenTrueConverter}}" />
+			<Grid Visibility="{Binding ShowList, Converter={StaticResource VisibleWhenTrueConverter}}">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="*" />
+				</Grid.ColumnDefinitions>
+				<!-- TODO: Make stars visible/collapsed -->
+				<SymbolIcon Grid.Column="0" Symbol="SolidStar"
+					Visibility="Collapsed" />
+				<SymbolIcon Grid.Column="0" Symbol="OutlineStar"
+					Visibility="Visible" />
+				<TextBlock Grid.Column="1" Text="{Binding PlatformNo}" Margin="10,0,7,0"
+							Style="{StaticResource TitleTextBlockStyle}" />
+				<TextBlock Grid.Column="2" Text="{Binding PlatformName}" Margin="0,0,10,0"
+							Style="{StaticResource TitleTextBlockStyle}" />
+			</Grid>
+			<TextBlock Text="{Binding Error}" Margin="10"
 				Visibility="{Binding Error, Converter={StaticResource CollapsedWhenNullConverter}}" />
-			<StackPanel Orientation="Horizontal"
-					Visibility="{Binding ShowList, Converter={StaticResource VisibleWhenTrueConverter}}">
-				<TextBlock Text="{Binding PlatformNo}" Style="{StaticResource TitleTextBlockStyle}"
-						Margin="0,0,7,0" />
-				<TextBlock Text="{Binding PlatformName}" Style="{StaticResource TitleTextBlockStyle}" />
-			</StackPanel>
 		</StackPanel>
 
 		<ItemsControl Grid.Row="1" ItemsSource="{Binding ETAs}"
@@ -50,14 +60,14 @@
 							<ColumnDefinition Width="*"/>
 						</Grid.ColumnDefinitions>
 						<TextBlock Grid.Column="0" Text="{Binding RouteNo}"
-							Style="{StaticResource BaseTextBlockStyle}"
-							TextWrapping="NoWrap" />
+									Style="{StaticResource BaseTextBlockStyle}"
+									TextWrapping="NoWrap" />
 						<TextBlock Grid.Column="1" Text="{Binding Destination}" Margin="10,0,10,0"
-							Style="{StaticResource BodyTextBlockStyle}"
-							TextWrapping="NoWrap" />
+									Style="{StaticResource BodyTextBlockStyle}"
+									TextWrapping="NoWrap" />
 						<TextBlock Grid.Column="2" Text="{Binding Mins}"
-							Style="{StaticResource BaseTextBlockStyle}"
-							TextWrapping="NoWrap" />
+									Style="{StaticResource BaseTextBlockStyle}"
+									TextWrapping="NoWrap" />
 					</Grid>
 				</DataTemplate>
 			</ItemsControl.ItemTemplate>
@@ -71,11 +81,11 @@
 		</ItemsControl>
 
 		<StackPanel Grid.Row="2" Orientation="Horizontal" Margin="10"
-			Visibility="{Binding ShowList, Converter={StaticResource VisibleWhenTrueConverter}}">
+					Visibility="{Binding ShowList, Converter={StaticResource VisibleWhenTrueConverter}}">
 			<TextBlock Text="Last fetched: " Style="{StaticResource CaptionTextBlockStyle}"
-				Margin="0,0,5,0"/>
+						Margin="0,0,5,0"/>
 			<TextBlock Text="{Binding LastUpdated, Converter={StaticResource DateTimeConverter}}"
-				Style="{StaticResource CaptionTextBlockStyle}" />
+						Style="{StaticResource CaptionTextBlockStyle}" />
 		</StackPanel>
 	</Grid>
 </Page>

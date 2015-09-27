@@ -1,18 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Text.RegularExpressions;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
+﻿using System.Text.RegularExpressions;
 using Windows.UI.Xaml.Controls;
-using System.Threading.Tasks;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 namespace ChchBus {
@@ -28,10 +15,22 @@ namespace ChchBus {
 		}
 
 		/// <summary>
+		/// Invoked when this page is navigated to.
+		/// </summary>
+		/// <param name="e">Event arguments: Parameter should contain a platform number</param>
+		protected override void OnNavigatedTo (NavigationEventArgs e) {
+			base.OnNavigatedTo(e);
+			var vm = DataContext as NextBuses;
+			if (e.Parameter != null) {
+				vm.FetchETAs((int)e.Parameter);
+			}
+		}
+
+		/// <summary>
 		/// Invoked when a stop is entered into the box.
 		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
+		/// <param name="sender">Event sender</param>
+		/// <param name="e">Event arguments</param>
 		private void TextBox_TextChanged (object sender, TextChangedEventArgs e) {
 			if (Regex.IsMatch(entryBox.Text, @"^\d{5}$")) {
 				// This is a platform number

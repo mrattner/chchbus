@@ -1,0 +1,60 @@
+﻿<Page
+	x:Class="ChchBus.FavouritesPage"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:local="using:ChchBus"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:b="using:Itzben"
+	mc:Ignorable="d"
+	DataContext="{Binding Path=FavouritesViewModel, Source={StaticResource ViewModelLocator}}">
+
+	<Page.Resources>
+		<b:VisibleWhenTrueConverter x:Key="VisibleWhenTrueConverter" />
+		<b:CollapsedWhenNullConverter x:Key="CollapsedWhenNullConverter" />
+		<local:DateTimeConverter x:Key="DateTimeConverter" />
+	</Page.Resources>
+
+	<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />	<!-- 0: Title -->
+			<RowDefinition Height="*" />	<!-- 1: Favourites list -->
+			<RowDefinition Height="Auto" />	<!-- 2: Navigation -->
+		</Grid.RowDefinitions>
+
+		<TextBlock Grid.Row="0" Margin="10,10,10,0" Text="Saved stops"
+			Style="{StaticResource HeaderTextBlockStyle}"/>
+
+		<!-- TODO: When there are no favourites, show a message -->
+		<ListView Grid.Row="1" ItemsSource="{Binding Faves}"
+			IsItemClickEnabled="True" ItemClick="ListView_ItemClick">
+			<!-- TODO: Add doubleclick/long tap handler with flyout for editing the name -->
+			<ListView.ItemTemplate>
+				<DataTemplate>
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="*" />
+						</Grid.ColumnDefinitions>
+						<TextBlock Grid.Column="0" Text="{Binding PlatformNo}" VerticalAlignment="Top"
+							Style="{StaticResource SubtitleTextBlockStyle}" TextWrapping="NoWrap" />
+						<StackPanel Grid.Column="1">
+							<TextBlock Text="{Binding StopName}" Margin="10,0,10,0"
+								Style="{StaticResource SubtitleTextBlockStyle}" TextWrapping="NoWrap" />
+							<TextBlock Text="{Binding CustomName}" Margin="10,0,10,0"
+								Style="{StaticResource BodyTextBlockStyle}" TextWrapping="NoWrap"
+								Visibility="{Binding CustomName, Converter={StaticResource CollapsedWhenNullConverter}}" />
+						</StackPanel>
+					</Grid>
+				</DataTemplate>
+			</ListView.ItemTemplate>
+			<ListView.Template>
+				<ControlTemplate TargetType="ListView">
+					<ScrollViewer VerticalScrollBarVisibility="Auto">
+						<ItemsPresenter Margin="0,10,10,10" />
+					</ScrollViewer>
+				</ControlTemplate>
+			</ListView.Template>
+		</ListView>
+	</Grid>
+</Page>
