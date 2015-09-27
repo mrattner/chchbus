@@ -1,0 +1,45 @@
+﻿<Page
+	x:Class="ChchBus.MainPage"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:local="using:ChchBus"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d">
+
+	<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*" />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
+		<Frame Grid.Row="0" x:Name="mainFrame" Navigated="mainFrame_Navigated" />
+		<Grid Grid.Row="1">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition />
+				<ColumnDefinition />
+				<ColumnDefinition />
+			</Grid.ColumnDefinitions>
+			<ToggleButton Grid.Column="0" x:Name="saved"
+				Checked="NavButton_Checked" Click="NavButton_Click" HorizontalAlignment="Stretch">
+				<StackPanel>
+					<SymbolIcon Symbol="Favorite" />
+					<TextBlock Text="Saved Stops" HorizontalAlignment="Center" />
+				</StackPanel>
+			</ToggleButton>
+			<ToggleButton Grid.Column="1" x:Name="nextBuses"
+				Checked="NavButton_Checked" Click="NavButton_Click" HorizontalAlignment="Stretch">
+				<StackPanel>
+					<SymbolIcon Symbol="Clock" />
+					<TextBlock Text="Next Buses" HorizontalAlignment="Center" />
+				</StackPanel>
+			</ToggleButton>
+			<ToggleButton Grid.Column="2" x:Name="about"
+				Checked="NavButton_Checked" Click="NavButton_Click" HorizontalAlignment="Stretch">
+				<StackPanel>
+					<SymbolIcon Symbol="Help" />
+					<TextBlock Text="About" HorizontalAlignment="Center" />
+				</StackPanel>
+			</ToggleButton>
+		</Grid>
+	</Grid>
+</Page>

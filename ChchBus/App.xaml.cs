@@ -65,7 +65,7 @@ namespace ChchBus {
 				// When the navigation stack isn't restored navigate to the first page,
 				// configuring the new page by passing required information as a navigation
 				// parameter
-				rootFrame.Navigate(typeof(NextBusesPage), e.Arguments);
+				rootFrame.Navigate(typeof(MainPage), e.Arguments);
 			}
 			// Ensure the current window is active
 			Window.Current.Activate();
@@ -81,7 +81,7 @@ namespace ChchBus {
 		}
 
 		/// <summary>
-		/// Invoked when application execution is being suspended.  Application state is saved
+		/// Invoked when application execution is being suspended. Application state is saved
 		/// without knowing whether the application will be terminated or resumed with the contents
 		/// of memory still intact.
 		/// </summary>
