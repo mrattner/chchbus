@@ -1,0 +1,33 @@
+﻿<Page
+	x:Class="ChchBus.AboutPage"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:local="using:ChchBus"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d">
+
+	<StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="10">
+		<TextBlock Text="About this app" Style="{StaticResource HeaderTextBlockStyle}" />
+		<TextBlock Style="{StaticResource BodyTextBlockStyle}" Margin="10,10,10,0">
+			To save a bus stop, search for it in the "Next Buses" view and click the star icon.
+			Clicking on a bus stop in the "Saved Stops" view will load its arrivals information
+			in the "Next Buses" view. To remove a stop from the saved list, un-star it from the
+			"Next Buses" view.
+		</TextBlock>
+		<TextBlock Style="{StaticResource BodyTextBlockStyle}" Margin="10,10,10,0">
+			To set a custom name for a saved bus stop, double click or long press on its name
+			in the "Saved Stops" view.
+		</TextBlock>
+		<TextBlock Style="{StaticResource BodyTextBlockStyle}" Margin="10,10,10,0">
+			This app was made by Marcy Rattner for Microsoft Student Accelerator Phase 1.
+		</TextBlock>
+		<TextBlock Style="{StaticResource BodyTextBlockStyle}" Margin="10,10,10,0">
+			Bus icon made by <Hyperlink NavigateUri="http://www.flaticon.com/authors/freepik">
+			Freepik</Hyperlink> can be found <Hyperlink NavigateUri=
+			"http://www.flaticon.com/free-icon/front-of-bus_308">here</Hyperlink>. Licensed under
+			<Hyperlink NavigateUri="http://creativecommons.org/licenses/by/3.0/">Creative
+			Commons 3.0</Hyperlink>.
+		</TextBlock>
+	</StackPanel>
+</Page>
