@@ -13,6 +13,26 @@
 		<b:VisibleWhenTrueConverter x:Key="VisibleWhenTrueConverter" />
 		<b:CollapsedWhenNullConverter x:Key="CollapsedWhenNullConverter" />
 		<local:DateTimeConverter x:Key="DateTimeConverter" />
+		<Style x:Key="EditButtonStyle" TargetType="Button">
+			<Setter Property="Background" Value="Purple" />
+			<Setter Property="Padding" Value="8" />
+			<Setter Property="HorizontalAlignment" Value="Center" />
+		</Style>
+		<Flyout x:Key="EditFlyout" x:Name="editFlyout" Placement="Left" Closed="editFlyout_Closed">
+			<StackPanel>
+				<StackPanel Orientation="Horizontal" Margin="0,5">
+					<TextBlock Text="Custom name for #" />
+					<TextBlock Text="{Binding PlatformNo}" />
+					<TextBlock Text=":" />
+				</StackPanel>
+				<AutoSuggestBox x:Name="nameBox" QueryIcon="Accept"
+					PlaceholderText="e.g. 'Susan's house EB'"
+					QuerySubmitted="nameBox_QuerySubmitted" Width="260" MaxWidth="260" />
+				<Button Click="OnDelete_Click" Margin="0,10">
+					Delete from list
+				</Button>
+			</StackPanel>
+		</Flyout>
 	</Page.Resources>
 
 	<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -29,31 +49,39 @@
 			Visibility="{Binding Error, Converter={StaticResource CollapsedWhenNullConverter}}" />
 
 		<ListView Grid.Row="2" ItemsSource="{Binding Faves}" CanReorderItems="True" AllowDrop="True"
-			IsItemClickEnabled="True" ItemClick="ListView_ItemClick">
-			<!-- TODO: Add doubleclick/long tap handler with flyout for editing the name -->
+			ItemClick="ListView_ItemClick" IsItemClickEnabled="True">
+			<ListView.ItemContainerStyle>
+				<Style TargetType="ListViewItem">
+					<Setter Property="HorizontalContentAlignment" Value="Stretch" />
+				</Style>
+			</ListView.ItemContainerStyle>
 			<ListView.ItemTemplate>
 				<DataTemplate>
 					<Grid>
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition Width="Auto" />
 							<ColumnDefinition Width="*" />
+							<ColumnDefinition Width="Auto" />
 						</Grid.ColumnDefinitions>
 						<TextBlock Grid.Column="0" Text="{Binding PlatformNo}" VerticalAlignment="Top"
 							Style="{StaticResource SubtitleTextBlockStyle}" TextWrapping="NoWrap" />
-						<StackPanel Grid.Column="1">
-							<TextBlock Text="{Binding StopName}" Margin="10,0,10,0"
+						<StackPanel Grid.Column="1" Margin="7,0,10,0">
+							<TextBlock Text="{Binding StopName}" Margin="0,0,10,0"
 								Style="{StaticResource SubtitleTextBlockStyle}" TextWrapping="NoWrap" />
-							<TextBlock Text="{Binding CustomName}" Margin="10,0,10,0"
+							<TextBlock Text="{Binding CustomName}"
 								Style="{StaticResource BodyTextBlockStyle}" TextWrapping="NoWrap"
 								Visibility="{Binding CustomName, Converter={StaticResource CollapsedWhenNullConverter}}" />
 						</StackPanel>
+						<Button Grid.Column="2" Style="{StaticResource EditButtonStyle}" Flyout="{StaticResource EditFlyout}">
+							<SymbolIcon Symbol="Edit" />
+						</Button>
 					</Grid>
 				</DataTemplate>
 			</ListView.ItemTemplate>
 			<ListView.Template>
 				<ControlTemplate TargetType="ListView">
 					<ScrollViewer VerticalScrollBarVisibility="Auto">
-						<ItemsPresenter Margin="0,10,10,10" />
+						<ItemsPresenter />
 					</ScrollViewer>
 				</ControlTemplate>
 			</ListView.Template>

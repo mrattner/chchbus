@@ -19,12 +19,12 @@
 				<TextBlock Style="{StaticResource BodyTextBlockStyle}" Margin="0,5">
 					To save a bus stop, search for it in the "Next Buses" view and click the star icon.
 					Clicking on a bus stop in the "Saved Stops" view will load its arrivals information
-					in the "Next Buses" view. To remove a stop from the saved list, un-star it from the
-					"Next Buses" view.
+					in the "Next Buses" view. You can un-star a bus stop from the "Next Buses" view to
+					remove it from the favourites list.
 				</TextBlock>
 				<TextBlock Style="{StaticResource BodyTextBlockStyle}" Margin="0,5">
-					To set a custom name for a saved bus stop, double click or long press on its name
-					in the "Saved Stops" view.
+					To set a custom name for a saved bus stop, click its edit icon in the "Saved 
+					Stops" view. You can also delete the stop in the edit window.
 				</TextBlock>
 				<TextBlock Style="{StaticResource BodyTextBlockStyle}" Margin="0,5">
 					This app was made by Marcy Rattner for Microsoft Student Accelerator Phase 1.

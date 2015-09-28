@@ -49,10 +49,19 @@ namespace ChchBus {
 		/// <param name="stopNumber">Platform to check</param>
 		/// <returns>True if the platform is saved in the list</returns>
 		public bool IsSaved (int stopNumber) {
-			var stop = this.Faves.FirstOrDefault((x) => {
-				return x.PlatformNo == stopNumber;
-			});
+			var stop = this.Faves.FirstOrDefault(x => x.PlatformNo == stopNumber);
 			return stop != null;
+		}
+
+		/// <summary>
+		/// Save a new custom name for a favourite.
+		/// </summary>
+		/// <param name="stopNumber">Platform number whose name to change</param>
+		/// <param name="newName">Custom name for the platform</param>
+		public void ChangeCustomName (int stopNumber, string newName) {
+			var toChange = this.Faves.First(x => x.PlatformNo == stopNumber);
+			toChange.CustomName = newName;
+			this.model.EditFavourite(toChange);
 		}
 
 		/// <summary>
@@ -75,9 +84,10 @@ namespace ChchBus {
 		/// </summary>
 		/// <param name="stopNumber">Platform number to remove</param>
 		public void RemoveSavedStop (int stopNumber) {
-			this.model.RemoveFavourite(stopNumber);
+			this.model.RemoveFavouriteById(stopNumber);
 			// Have to do this the old-fashioned way because ObservableCollection
-			// has no equivalent of "remove where..." method
+			// has no equivalent of "remove where..." method and I don't want to
+			// search the collection twice.
 			for (int i = 0; i < this.Faves.Count; i++) {
 				var fave = this.Faves.ElementAt(i);
 				if (fave.PlatformNo == stopNumber) {

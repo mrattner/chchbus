@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using GalaSoft.MvvmLight;
 using Windows.Storage;
 
 namespace ChchBus {
@@ -28,7 +29,7 @@ namespace ChchBus {
 		/// </summary>
 		/// <param name="platformNo">Platform number of saved bus stop</param>
 		/// <returns>Object representing the saved stop</returns>
-		public Favourite GetFavourite (int platformNo) {
+		public Favourite GetFavouriteById (int platformNo) {
 			string key = platformNo.ToString();
 			var entry = (ApplicationDataCompositeValue)this.appData.Values[key];
 			if (entry == null) {
@@ -81,38 +82,46 @@ namespace ChchBus {
 		/// <summary>
 		/// Removes a bus stop from the favourites list.
 		/// </summary>
-		/// <param name="platformNo">Platform number to remove</param>
-		public void RemoveFavourite (int platformNo) {
+		/// <param name="platformNo">Platform to remove</param>
+		public void RemoveFavouriteById (int platformNo) {
 			string key = platformNo.ToString();
+			// If the key does not exist, the collection remains unchanged
+			// and no exception is thrown. (IDictionary.Remove)
 			this.appData.Values.Remove(key);
 		}
 
 		/// <summary>
-		/// Give a custom name to a saved stop.
+		/// Edit information for a saved stop.
 		/// </summary>
-		/// <param name="platformNo"></param>
-		public void ChangeName (int platformNo, string name) {
-			string key = platformNo.ToString();
+		/// <param name="platform">Platform to edit</param>
+		public void EditFavourite (Favourite platform) {
+			string key = platform.PlatformNo.ToString();
 			var entry = (ApplicationDataCompositeValue)this.appData.Values[key];
 			if (entry == null) {
 				throw new KeyNotFoundException("No such platform number in saved stops");
 			}
-			entry[CUSTOM_NAME] = name;
+			entry[CUSTOM_NAME] = platform.CustomName;
 			this.appData.Values[key] = entry;
 		}
 
 		/// <summary>
 		/// Represents information about a saved bus stop.
 		/// </summary>
-		public class Favourite : IComparable<Favourite> {
+		public class Favourite : ObservableObject, IComparable<Favourite> {
 			public int PlatformNo {
 				get; set;
 			}
 			public string StopName {
 				get; set;
 			}
+			private string customName;
 			public string CustomName {
-				get; set;
+				get {
+					return this.customName;
+				} set {
+					this.customName = value;
+					RaisePropertyChanged();
+				}
 			}
 
 			public int CompareTo (Favourite other) {
