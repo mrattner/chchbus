@@ -34,9 +34,19 @@ namespace ChchBus {
 		private void TextBox_TextChanged (object sender, TextChangedEventArgs e) {
 			if (Regex.IsMatch(entryBox.Text, @"^\d{5}$")) {
 				// This is a platform number
-				NextBuses vm = DataContext as NextBuses;
+				var vm = DataContext as NextBuses;
 				vm.FetchETAs(int.Parse(entryBox.Text));
 			}
+		}
+
+		/// <summary>
+		/// Invoked when the save button is clicked.
+		/// </summary>
+		/// <param name="sender">Event sender</param>
+		/// <param name="e">Event arguments</param>
+		private void save_Click (object sender, Windows.UI.Xaml.RoutedEventArgs e) {
+			var vm = DataContext as NextBuses;
+			vm.ToggleSaved();
 		}
 	}
 }

@@ -27,19 +27,31 @@ namespace ChchBus {
 			set {
 				this.faves = value;
 				RaisePropertyChanged();
+				if (this.faves.Count == 0) {
+					this.Error = NO_SAVED_STOPS;
+				}
 			}
 		}
 
 		/// <summary>
-		/// Constructor: Initialise the model.
+		/// Constructor: Initialise instance variables.
 		/// </summary>
 		public Favourites () {
 			this.model = new DataStorage();
 			var savedStops = this.model.GetAllFavourites();
 			this.Faves = new ObservableCollection<DataStorage.Favourite>(savedStops);
-			if (this.Faves.Count == 0) {
-				this.Error = NO_SAVED_STOPS;
-			}
+		}
+
+		/// <summary>
+		/// Determines whether a given stop is in the favourites list.
+		/// </summary>
+		/// <param name="stopNumber">Platform to check</param>
+		/// <returns>True if the platform is saved in the list</returns>
+		public bool IsSaved (int stopNumber) {
+			var stop = this.Faves.FirstOrDefault((x) => {
+				return x.PlatformNo == stopNumber;
+			});
+			return stop != null;
 		}
 
 		/// <summary>
@@ -69,7 +81,7 @@ namespace ChchBus {
 				var fave = this.Faves.ElementAt(i);
 				if (fave.PlatformNo == stopNumber) {
 					this.Faves.RemoveAt(i);
-					return;
+					break;
 				}
 			}
 		}

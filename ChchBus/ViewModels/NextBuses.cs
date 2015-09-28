@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Practices.ServiceLocation;
 
 namespace ChchBus {
 	/// <summary>
@@ -33,6 +34,11 @@ namespace ChchBus {
 		/// Data model
 		/// </summary>
 		private PlatformETAs model;
+
+		/// <summary>
+		/// Link to the Favourites view model
+		/// </summary>
+		private Favourites favouritesVM;
 
 		/// <summary>
 		/// The last time that data was fetched
@@ -77,6 +83,21 @@ namespace ChchBus {
 		}
 
 		/// <summary>
+		/// True when the currently loaded stop number is in the
+		/// favourites list
+		/// </summary>
+		private bool isSaved = false;
+		public bool IsSaved {
+			get {
+				return this.isSaved;
+			}
+			set {
+				this.isSaved = value;
+				RaisePropertyChanged();
+			}
+		}
+
+		/// <summary>
 		/// True when the platform-specific info should be shown
 		/// (when not loading and there is no error).
 		/// </summary>
@@ -106,11 +127,27 @@ namespace ChchBus {
 		}
 
 		/// <summary>
-		/// Constructor: Initialise the model and cancellation token source.
+		/// Constructor: Initialise instance variables.
 		/// </summary>
 		public NextBuses () {
 			this.model = new PlatformETAs();
 			this.cancel = new CancellationTokenSource();
+			// Get the Favourites view model so we can access its methods from here
+			this.favouritesVM = ServiceLocator.Current.GetInstance<Favourites>();
+		}
+
+		/// <summary>
+		/// Tells the Favourites view model to favourite or unfavourite the
+		/// current stop.
+		/// </summary>
+		public void ToggleSaved () {
+			if (this.favouritesVM.IsSaved(this.PlatformNo)) {
+				this.favouritesVM.RemoveSavedStop(this.PlatformNo);
+				this.IsSaved = false;
+			} else {
+				this.favouritesVM.AddSavedStop(this.PlatformNo, this.PlatformName);
+				this.IsSaved = true;
+			}
 		}
 
 		/// <summary>
@@ -122,6 +159,7 @@ namespace ChchBus {
 			this.IsLoading = true;
 			this.ShowList = false;
 			this.Error = null;
+			this.IsSaved = this.favouritesVM.IsSaved(stopNumber);
 
 			// Cancel and throw away the previous refresh task
 			this.cancel.Cancel();

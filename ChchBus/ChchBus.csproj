@@ -106,6 +106,7 @@
     <Compile Include="Models\DataStorage.cs" />
     <Compile Include="Models\Platforms.cs" />
     <Compile Include="ViewModelLocator.cs" />
+    <Compile Include="ViewModels\BoolToSymbolConverter.cs" />
     <Compile Include="ViewModels\DateTimeConverter.cs" />
     <Compile Include="ViewModels\Favourites.cs" />
     <Compile Include="ViewModels\CustomViewModel.cs" />
