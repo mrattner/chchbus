@@ -28,7 +28,7 @@
 		<TextBlock Grid.Row="1" Text="{Binding Error}" Padding="10" Style="{StaticResource BodyTextBlockStyle}"
 			Visibility="{Binding Error, Converter={StaticResource CollapsedWhenNullConverter}}" />
 
-		<ListView Grid.Row="2" ItemsSource="{Binding Faves}"
+		<ListView Grid.Row="2" ItemsSource="{Binding Faves}" CanReorderItems="True" AllowDrop="True"
 			IsItemClickEnabled="True" ItemClick="ListView_ItemClick">
 			<!-- TODO: Add doubleclick/long tap handler with flyout for editing the name -->
 			<ListView.ItemTemplate>

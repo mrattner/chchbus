@@ -39,6 +39,7 @@ namespace ChchBus {
 		public Favourites () {
 			this.model = new DataStorage();
 			var savedStops = this.model.GetAllFavourites();
+			savedStops.Sort();
 			this.Faves = new ObservableCollection<DataStorage.Favourite>(savedStops);
 		}
 

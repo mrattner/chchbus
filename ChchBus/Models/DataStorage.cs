@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Windows.Storage;
 
 namespace ChchBus {
@@ -103,7 +104,7 @@ namespace ChchBus {
 		/// <summary>
 		/// Represents information about a saved bus stop.
 		/// </summary>
-		public class Favourite {
+		public class Favourite : IComparable<Favourite> {
 			public int PlatformNo {
 				get; set;
 			}
@@ -112,6 +113,15 @@ namespace ChchBus {
 			}
 			public string CustomName {
 				get; set;
+			}
+
+			public int CompareTo (Favourite other) {
+				int nameComparison = this.StopName.CompareTo(other.StopName);
+				if (nameComparison == 0) {
+					return this.PlatformNo.CompareTo(other.PlatformNo);
+				} else {
+					return nameComparison;
+				}
 			}
 		}
 	}
