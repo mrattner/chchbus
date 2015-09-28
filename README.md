@@ -10,7 +10,7 @@ The Bus Stops app communicates with the Christchurch Metro website at [metroinfo
 * See which buses are coming and when they will arrive
 
 ##Known issues
-* When you edit a custom name for a stop, the text box doesn't show the name you alreaady entered
+* When you edit a custom name for a stop, the text box doesn't show the name you already entered
 * Scrolling seems unresponsive when using touch; only works with mouse
 * I don't own a Windows 10 mobile device or emulator, so the user interface has only been tested on a laptop!
 
