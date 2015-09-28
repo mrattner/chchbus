@@ -15,6 +15,7 @@
 		<local:BoolToSymbolConverter x:Key="BoolToSymbolConverter" />
 		<local:DateTimeConverter x:Key="DateTimeConverter" />
 		<Style x:Key="SaveButtonStyle" TargetType="Button">
+			<Setter Property="Background" Value="DarkGoldenrod" />
 			<Setter Property="Padding" Value="3" />
 			<Setter Property="HorizontalAlignment" Value="Center" />
 		</Style>
