@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Linq;
 using System.Xml.Linq;
 
 namespace ChchBus {
@@ -12,7 +11,7 @@ namespace ChchBus {
 	/// </summary>
 	class PlatformETAs {
 		/// <summary>
-		/// Used for fetching XML from metroinfo API
+		/// Used for fetching XML from MetroInfo API
 		/// </summary>
 		private HttpClient client;
 
