@@ -18,15 +18,17 @@
 	<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />	<!-- 0: Title -->
-			<RowDefinition Height="*" />	<!-- 1: Favourites list -->
-			<RowDefinition Height="Auto" />	<!-- 2: Navigation -->
+			<RowDefinition Height="Auto" /> <!-- 1: Message -->
+			<RowDefinition Height="*" />	<!-- 2: Favourites list -->
 		</Grid.RowDefinitions>
 
 		<TextBlock Grid.Row="0" Margin="10,10,10,0" Text="Saved stops"
 			Style="{StaticResource HeaderTextBlockStyle}"/>
 
-		<!-- TODO: When there are no favourites, show a message -->
-		<ListView Grid.Row="1" ItemsSource="{Binding Faves}"
+		<TextBlock Grid.Row="1" Text="{Binding Error}" Padding="10" Style="{StaticResource BodyTextBlockStyle}"
+			Visibility="{Binding Error, Converter={StaticResource CollapsedWhenNullConverter}}" />
+
+		<ListView Grid.Row="2" ItemsSource="{Binding Faves}"
 			IsItemClickEnabled="True" ItemClick="ListView_ItemClick">
 			<!-- TODO: Add doubleclick/long tap handler with flyout for editing the name -->
 			<ListView.ItemTemplate>

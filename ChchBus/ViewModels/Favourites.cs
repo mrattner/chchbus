@@ -7,6 +7,11 @@ namespace ChchBus {
 	/// </summary>
 	class Favourites : CustomViewModel {
 		/// <summary>
+		/// Message for empty favourites list
+		/// </summary>
+		private static readonly string NO_SAVED_STOPS = "No bus stops have been saved yet. When you star one, it will appear here.";
+
+		/// <summary>
 		/// Data model
 		/// </summary>
 		private DataStorage model;
@@ -32,6 +37,9 @@ namespace ChchBus {
 			this.model = new DataStorage();
 			var savedStops = this.model.GetAllFavourites();
 			this.Faves = new ObservableCollection<DataStorage.Favourite>(savedStops);
+			if (this.Faves.Count == 0) {
+				this.Error = NO_SAVED_STOPS;
+			}
 		}
 
 		/// <summary>

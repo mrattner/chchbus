@@ -12,17 +12,17 @@ namespace ChchBus {
 		/// <summary>
 		/// Error message for nonexistent platform number
 		/// </summary>
-		private static string PLATFORM_NUMBER_NOT_FOUND = "That platform number doesn't exist.";
+		private static readonly string PLATFORM_NUMBER_NOT_FOUND = "That platform number doesn't exist.";
 
 		/// <summary>
 		/// Message for no buses coming within the next hour
 		/// </summary>
-		private static string NO_BUSES_COMING = "No buses are arriving at this platform within the next hour.";
+		private static readonly string NO_BUSES_COMING = "No buses are arriving at this platform within the next hour.";
 
 		/// <summary>
 		/// Seconds between refreshes
 		/// </summary>
-		private static int REFRESH_INTERVAL = 10;
+		private static readonly int REFRESH_INTERVAL = 10;
 
 		/// <summary>
 		/// Used for signalling the refresh task to cancel itself

@@ -7,8 +7,8 @@ namespace ChchBus {
 	/// </summary>
 	class DataStorage {
 		// Keys for the data objects
-		private static string STOP_NAME = "stopName";
-		private static string CUSTOM_NAME = "customName";
+		private static readonly string STOP_NAME = "stopName";
+		private static readonly string CUSTOM_NAME = "customName";
 
 		/// <summary>
 		/// The local app data store

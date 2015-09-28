@@ -19,7 +19,7 @@ namespace ChchBus {
 		/// URL for getting estimated times of arrival (requires platform number).
 		/// Also gets alerts if there are any, but we do not check for alerts.
 		/// </summary>
-		private static string ETA_URL_BASE =
+		private static readonly string ETA_URL_BASE =
 			"http://rtt.metroinfo.org.nz/rtt/public/utility/file.aspx?ContentType=SQLXML&Name=JPRoutePositionET2&PlatformNo=";
 
 		/// <summary>
